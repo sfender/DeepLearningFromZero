@@ -17,14 +17,15 @@
 	},
 	
 	// Uncomment the next line if you will use a ptrace-based debugger like C++, Go, and Rust.
-	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined",
+					"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro" ],
 
 	// Mount your .ssh folder to /root/.ssh-localhost so we can copy its contents
-	"runArgs": [ "-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro" ],
+	// "runArgs": [ "-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro" ],
 
 	// install requierments python libraries
 	// Copy the contents to the correct location and set permissions
-	"postCreateCommand": "pip install -r requirements.txt && mkdir -p ~/.ssh && cp -r ~/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*Pre"
+	"postCreateCommand": "mkdir -p ~/.ssh && cp -r ~/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*Pre　&& pip install -r requirements.txt "
 
 	// Uncomment the next line if you want to publish any ports.
 	// "appPort": [],
