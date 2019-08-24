@@ -1,0 +1,37 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "python & Git",
+	"dockerFile": "Dockerfile",
+	"appPort": 9000,
+	"extensions": [
+		"ms-python.python",
+		"lfs.vscode-emacs-friendly",
+		"visualstudioexptteam.vscodeintellicode",
+		"shakram02.bash-beautify"
+	],
+	"settings": {
+		"python.pythonPath": "/usr/local/bin/python",
+		"python.linting.pylintEnabled": true,
+		"python.linting.pylintPath": "/usr/local/bin/pylint",
+		"python.linting.enabled": true
+	},
+	
+	// Uncomment the next line if you will use a ptrace-based debugger like C++, Go, and Rust.
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+
+	// Mount your .ssh folder to /root/.ssh-localhost so we can copy its contents
+	"runArgs": [ "-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro" ],
+
+	// install requierments python libraries
+	// Copy the contents to the correct location and set permissions
+	"postCreateCommand": "pip install -r requirements.txt && mkdir -p ~/.ssh && cp -r ~/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*Pre"
+
+	// Uncomment the next line if you want to publish any ports.
+	// "appPort": [],
+
+	// Uncomment the next line if you want to add in default container specific settings.json values
+	// "settings":  { "workbench.colorTheme": "Quiet Light" },
+
+	// Uncomment the next line to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+}
