@@ -25,8 +25,8 @@
 
 	// install requierments python libraries
 	// Copy the contents to the correct location and set permissions
-	"postCreateCommand": "mkdir -p ~/.ssh && cp -r ~/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*Pre　&& pip install -r requirements.txt "
-
+	"postCreateCommand": "mkdir -p ~/.ssh && cp -r ~/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*Pre",
+	
 	// Uncomment the next line if you want to publish any ports.
 	// "appPort": [],
 

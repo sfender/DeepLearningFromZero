@@ -32,6 +32,9 @@ RUN apt-get update \
     && apt-get -y install git procps lsb-release \
     && apt-get update \
 
+    ## pip install 
+    && pip install numpy \
+
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
