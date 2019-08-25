@@ -35,6 +35,8 @@ RUN apt-get update \
     ## pip install 
     && pip install numpy \
     && pip install matplotlib \
+    && pip install jupyter\
+
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
