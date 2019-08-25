@@ -34,7 +34,7 @@ RUN apt-get update \
 
     ## pip install 
     && pip install numpy \
-
+    && pip install matplotlib \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
