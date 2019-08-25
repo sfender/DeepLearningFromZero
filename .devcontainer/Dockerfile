@@ -38,7 +38,7 @@ RUN apt-get update \
     && pip install jupyter\
 
     # Clean up
-    && apt-get autoremove -y \
+   P&& apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* 
 
