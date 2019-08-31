@@ -1,26 +1,28 @@
-#%%
-import numpy as np
-
 #%% 
+import numpy as np
+import sys, os
+sys.path.append(os.pardir)
+from dataset.mnist import load_mnist
+from PIL import Image   
+import pickle
+
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 def identity_function(x):
     return x
 
-#%%
-def init_network():
-    network = {}
-    network['W1'] = np.array([[0.1, 0.3, 0.5], [0.2, 0.4, 0.6]])
-    network['b1'] = np.array([0.1, 0.2, 0.3])
-    network['W2'] = np.array([[0.1, 0.4], [0.2, 0.5], [0.3, 0.6]])
-    network['b2'] = np.array([0.1, 0.2])
-    network['W3'] = np.array([[0.1, 0.3], [0.2, 0.4]])    
-    network['b3'] = np.array([0.1, 0.2])
+def get_data():
+    (x_train, t_train),(x_test, t_test) = \
+        load_mnist(normalize=False, flatten=True, one_hot_label=False)    
+    return x_test, t_test
 
+def init_network():
+    with open("./chapter3/sample_weight.pkl", 'rb') as f:
+        network = pickle.load(f)
     return network
-#%%
-def forward(nerwork, x):
+
+def predict(network, x):
     W1, W2, W3 = network['W1'], network['W2'], network['W3']
     b1, b2, b3 = network['b1'], network['b2'], network['b3']
 
@@ -33,7 +35,6 @@ def forward(nerwork, x):
 
     return y
 
-#%% 
 def softmax(a):
     c = np.max(a)
     exp_a = np.exp(a - c)
@@ -41,13 +42,33 @@ def softmax(a):
     y = exp_a / sum_exp_a
 
     return y
+
+def image_show(img):
+    pil_img = Image.fromarray(np.uint8(img))
+    pil_img.show()
+
 #%% 
+x, t = get_data()
 network = init_network()
-x = np.array([1.0, 0.5])
-y = forward(network, x)
-print(y)
+
+accuracy_cnt = 0
+for i in range(len(x)):
+    y = predict(network, x[i])
+    p = np.argmax(y)
+    if p == t[i]:  
+        accuracy_cnt += 1
+print("accuracy:" + str(float(accuracy_cnt)/len(x))) 
 
 #%%
-a = np.array([0.3, 2.0, 9.0])
-y = softmax(a)
-print(y)
+x, t = get_data()
+network = init_network()
+
+batch_size = 100
+accuracy_cnt = 0
+
+for i in range(0, len(x), batch_size):
+    x_batch = x[i:i+batch_size]
+    y_batch = predict(network, x_batch)
+    p = np.argmax(y_batch, axis=1)
+    accuracy_cnt += np.sum(p == t[i:i+batch_size])
+print("accuracy:" + str(float(accuracy_cnt)/len(x))) 
