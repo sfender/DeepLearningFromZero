@@ -54,6 +54,6 @@ class TwoLayerNet:
 
 
 #%% 
-net = TwoLayerNet(input_size = 784, hidden_size=100, output_size=10)
-x = np.random.randn(100, 784)
-y = net.predict(x)
+# net = TwoLayerNet(input_size = 784, hidden_size=100, output_size=10)
+# x = np.random.randn(100, 784)
+# y = net.predict(x)
